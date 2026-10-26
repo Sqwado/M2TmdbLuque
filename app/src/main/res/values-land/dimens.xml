@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="screen_horizontal_margin">24dp</dimen>
+    <dimen name="list_bottom_padding">72dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="person_card_margin_horizontal">8dp</dimen>
+    <dimen name="person_card_margin_vertical">4dp</dimen>
+    <dimen name="person_card_padding">10dp</dimen>
+    <dimen name="person_poster_width">64dp</dimen>
+    <dimen name="person_poster_height">96dp</dimen>
+    <dimen name="person_content_margin_start">12dp</dimen>
+
+    <dimen name="detail_poster_width">120dp</dimen>
+    <dimen name="detail_poster_height">180dp</dimen>
+    <dimen name="detail_content_padding_horizontal">16dp</dimen>
+    <dimen name="detail_section_padding_top">8dp</dimen>
+
+    <dimen name="known_for_card_padding">12dp</dimen>
+    <dimen name="known_for_card_margin_horizontal">4dp</dimen>
+    <dimen name="land_header_panel_width">280dp</dimen>
+    <dimen name="land_header_title_max_width">140dp</dimen>
+</resources>

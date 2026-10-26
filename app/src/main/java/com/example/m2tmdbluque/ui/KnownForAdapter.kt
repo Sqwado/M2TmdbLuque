@@ -27,11 +27,13 @@ class KnownForAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(knownFor: KnownFor) {
+            val context = binding.root.context
             binding.knownFor = knownFor
-            binding.textMeta.text = binding.root.context.getString(
+            binding.textTitle.text = knownFor.displayTitle(context)
+            binding.textMeta.text = context.getString(
                 R.string.known_for_item,
-                knownFor.mediaType ?: "—",
-                knownFor.displayDate(),
+                knownFor.mediaType ?: context.getString(R.string.value_unavailable),
+                knownFor.displayDate(context),
                 knownFor.voteAverage ?: 0.0,
             )
             binding.executePendingBindings()

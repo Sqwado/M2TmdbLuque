@@ -12,7 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.m2tmdbluque.api.TmdbClient
 import com.example.m2tmdbluque.databinding.ActivityMainBinding
@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity() {
     private var searchQuery = ""
     private var isSearchMode = false
     private var activeCall: Call<PopularPeopleResponse>? = null
+    private val prefetchThreshold by lazy { resources.getInteger(R.integer.prefetch_threshold) }
+    private val scrollTopThreshold by lazy { resources.getInteger(R.integer.scroll_top_threshold) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +48,10 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+            )
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
             insets
         }
 
@@ -64,19 +68,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        val layoutManager = LinearLayoutManager(this)
+        val spanCount = resources.getInteger(R.integer.list_span_count)
+        val layoutManager = GridLayoutManager(this, spanCount)
         binding.recyclerPeople.layoutManager = layoutManager
         binding.recyclerPeople.adapter = personAdapter
 
         binding.recyclerPeople.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 binding.fabScrollTop.isVisible =
-                    layoutManager.findFirstVisibleItemPosition() > SCROLL_TOP_THRESHOLD
+                    layoutManager.findFirstVisibleItemPosition() > scrollTopThreshold
 
                 if (dy <= 0 || isLoading || !hasMore) return
 
                 val lastVisible = layoutManager.findLastVisibleItemPosition()
-                if (lastVisible >= layoutManager.itemCount - PREFETCH_THRESHOLD) {
+                if (lastVisible >= layoutManager.itemCount - prefetchThreshold) {
                     loadPeople(page = currentPage + 1)
                 }
             }
@@ -232,7 +237,5 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "MainActivity"
-        private const val PREFETCH_THRESHOLD = 5
-        private const val SCROLL_TOP_THRESHOLD = 8
     }
 }

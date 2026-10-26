@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="person"
+            type="com.example.m2tmdbluque.model.Person" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSurface"
+        tools:context=".PersonDetailActivity">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/Widget.M2Tmdb.Toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationContentDescription="@string/back"
+            app:navigationIconTint="?attr/colorOnSurface"
+            app:title="@{person.name}"
+            app:titleTextColor="?attr/colorOnSurface"
+            tools:title="Tom Holland" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineSplit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.30" />
+
+        <LinearLayout
+            android:id="@+id/panelProfile"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/screen_horizontal_margin"
+            android:paddingTop="@dimen/spacing_md"
+            android:paddingEnd="@dimen/spacing_md"
+            android:paddingBottom="@dimen/spacing_md"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guidelineSplit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageProfile"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_placeholder_person"
+                android:contentDescription="@string/person_photo"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.M2Tmdb.PosterDetail"
+                tools:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/textName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:maxLines="1"
+                android:text="@{person.name}"
+                android:textAppearance="?attr/textAppearanceTitleSmall"
+                android:textColor="?attr/colorOnSurface"
+                android:visibility="gone"
+                tools:text="Tom Holland" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:gravity="center_horizontal"
+                app:chipSpacingHorizontal="@dimen/chip_spacing"
+                app:chipSpacingVertical="@dimen/spacing_xs"
+                app:singleLine="false">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/textDepartment"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    app:chipBackgroundColor="?attr/colorPrimaryContainer"
+                    app:chipMinHeight="@dimen/person_chip_min_height"
+                    app:chipStrokeWidth="0dp"
+                    app:ensureMinTouchTargetSize="false"
+                    tools:text="Acting" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/textGender"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    app:chipBackgroundColor="?attr/colorTertiaryContainer"
+                    app:chipMinHeight="@dimen/person_chip_min_height"
+                    app:chipStrokeWidth="0dp"
+                    app:ensureMinTouchTargetSize="false"
+                    tools:text="Homme" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/textPopularity"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:text="@{@string/person_popularity(person.popularity)}"
+                    app:chipBackgroundColor="?attr/colorSecondaryContainer"
+                    app:chipMinHeight="@dimen/person_chip_min_height"
+                    app:chipStrokeWidth="0dp"
+                    app:ensureMinTouchTargetSize="false"
+                    tools:text="★ 10.9" />
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textKnownForTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:layout_marginEnd="@dimen/screen_horizontal_margin"
+            android:text="@string/known_for_section"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guidelineSplit"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerKnownFor"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:clipToPadding="false"
+            android:paddingEnd="@dimen/screen_horizontal_margin"
+            android:paddingBottom="@dimen/spacing_xxl"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guidelineSplit"
+            app:layout_constraintTop_toBottomOf="@id/textKnownForTitle"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_known_for" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

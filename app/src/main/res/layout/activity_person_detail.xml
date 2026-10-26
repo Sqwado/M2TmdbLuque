@@ -45,14 +45,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="32dp">
+                android:paddingBottom="@dimen/spacing_error">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imageProfile"
-                    android:layout_width="180dp"
-                    android:layout_height="270dp"
+                    android:layout_width="@dimen/detail_poster_width"
+                    android:layout_height="@dimen/detail_poster_height"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/spacing_lg"
                     android:background="@drawable/bg_placeholder_person"
                     android:contentDescription="@string/person_photo"
                     android:scaleType="centerCrop"
@@ -64,8 +64,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:paddingHorizontal="20dp"
-                    android:paddingTop="16dp"
+                    android:paddingHorizontal="@dimen/detail_content_padding_horizontal"
+                    android:paddingTop="@dimen/spacing_xxl"
                     android:text="@{person.name}"
                     android:textAppearance="?attr/textAppearanceHeadlineMedium"
                     android:textColor="?attr/colorOnSurface"
@@ -75,9 +75,9 @@
                     android:id="@+id/chipGroupInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:paddingTop="12dp"
-                    app:chipSpacingHorizontal="8dp"
+                    android:paddingHorizontal="@dimen/screen_horizontal_margin"
+                    android:paddingTop="@dimen/spacing_lg"
+                    app:chipSpacingHorizontal="@dimen/chip_spacing"
                     app:singleLine="false">
 
                     <com.google.android.material.chip.Chip
@@ -116,9 +116,9 @@
                     android:id="@+id/textKnownForTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="20dp"
-                    android:paddingTop="24dp"
-                    android:paddingBottom="8dp"
+                    android:paddingHorizontal="@dimen/detail_content_padding_horizontal"
+                    android:paddingTop="@dimen/detail_section_padding_top"
+                    android:paddingBottom="@dimen/spacing_md"
                     android:text="@string/known_for_section"
                     android:textAppearance="?attr/textAppearanceTitleLarge"
                     android:textColor="?attr/colorOnSurface" />
@@ -128,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
-                    android:paddingBottom="16dp"
+                    android:paddingBottom="@dimen/spacing_xxl"
                     tools:itemCount="3"
                     tools:listitem="@layout/item_known_for" />
             </LinearLayout>

@@ -16,8 +16,9 @@ data class Person(
     @SerializedName("profile_path") val profilePath: String? = null,
     @SerializedName("known_for") val knownFor: List<KnownFor> = emptyList(),
 ) : Serializable {
-    val knownForSummary: String
-        get() = knownFor.take(3).joinToString { it.displayTitle() }.ifBlank { "—" }
+    fun knownForSummary(context: Context): String =
+        knownFor.take(3).mapNotNull { it.rawTitle() }.joinToString()
+            .ifBlank { context.getString(R.string.value_unavailable) }
 
     fun genderLabel(context: Context): String = context.getString(
         when (gender) {

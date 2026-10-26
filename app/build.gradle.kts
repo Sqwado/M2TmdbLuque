@@ -43,6 +43,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
+        viewBinding = true
         dataBinding = true
         buildConfig = true
     }
@@ -59,7 +60,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp.logging)
-    implementation(libs.glide)
+    implementation(libs.picasso)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)

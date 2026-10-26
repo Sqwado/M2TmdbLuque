@@ -1,5 +1,7 @@
 package com.example.m2tmdbluque.model
 
+import android.content.Context
+import com.example.m2tmdbluque.R
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -17,7 +19,11 @@ data class KnownFor(
     @SerializedName("release_date") val releaseDate: String? = null,
     @SerializedName("first_air_date") val firstAirDate: String? = null,
 ) : Serializable {
-    fun displayTitle(): String = title ?: name ?: originalTitle ?: originalName ?: "Sans titre"
+    fun rawTitle(): String? = title ?: name ?: originalTitle ?: originalName
 
-    fun displayDate(): String = releaseDate ?: firstAirDate ?: "—"
+    fun displayTitle(context: Context): String =
+        rawTitle() ?: context.getString(R.string.untitled)
+
+    fun displayDate(context: Context): String =
+        releaseDate ?: firstAirDate ?: context.getString(R.string.value_unavailable)
 }

@@ -11,11 +11,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.example.m2tmdbluque.api.TmdbClient
 import com.example.m2tmdbluque.databinding.ActivityPersonDetailBinding
 import com.example.m2tmdbluque.model.Person
 import com.example.m2tmdbluque.ui.KnownForAdapter
+import com.squareup.picasso.Picasso
 
 class PersonDetailActivity : AppCompatActivity() {
 
@@ -27,8 +27,15 @@ class PersonDetailActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_person_detail)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.updatePadding(top = bars.top, bottom = bars.bottom)
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+            )
+            v.updatePadding(
+                left = bars.left,
+                top = bars.top,
+                right = bars.right,
+                bottom = bars.bottom,
+            )
             insets
         }
 
@@ -43,15 +50,22 @@ class PersonDetailActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
 
-        binding.textDepartment.text = person.knownForDepartment ?: "—"
+        binding.textDepartment.text =
+            person.knownForDepartment ?: getString(R.string.value_unavailable)
         binding.textGender.text = person.genderLabel(this)
 
-        Glide.with(binding.imageProfile)
-            .load(TmdbClient.profileImageUrl(person.profilePath, large = true))
-            .placeholder(R.drawable.bg_placeholder_person)
-            .error(R.drawable.bg_placeholder_person)
-            .centerCrop()
-            .into(binding.imageProfile)
+        val imageUrl = TmdbClient.profileImageUrl(person.profilePath, large = true)
+        if (imageUrl.isNullOrBlank()) {
+            binding.imageProfile.setImageResource(R.drawable.bg_placeholder_person)
+        } else {
+            Picasso.get()
+                .load(imageUrl)
+                .placeholder(R.drawable.bg_placeholder_person)
+                .error(R.drawable.bg_placeholder_person)
+                .fit()
+                .centerCrop()
+                .into(binding.imageProfile)
+        }
 
         binding.recyclerKnownFor.layoutManager = LinearLayoutManager(this)
         binding.recyclerKnownFor.adapter = KnownForAdapter(person.knownFor)

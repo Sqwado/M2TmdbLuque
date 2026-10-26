@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spacing -->
+    <dimen name="spacing_xxs">2dp</dimen>
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">6dp</dimen>
+    <dimen name="spacing_md">8dp</dimen>
+    <dimen name="spacing_lg">12dp</dimen>
+    <dimen name="spacing_xl">14dp</dimen>
+    <dimen name="spacing_xxl">16dp</dimen>
+    <dimen name="spacing_xxxl">20dp</dimen>
+    <dimen name="spacing_huge">24dp</dimen>
+    <dimen name="spacing_error">32dp</dimen>
+
+    <!-- Screen / list -->
+    <dimen name="screen_horizontal_margin">16dp</dimen>
+    <dimen name="list_bottom_padding">88dp</dimen>
+    <dimen name="fab_margin">20dp</dimen>
+    <dimen name="stats_chip_padding_horizontal">14dp</dimen>
+    <dimen name="stats_chip_padding_vertical">6dp</dimen>
+
+    <!-- Search -->
+    <dimen name="search_corner_radius">28dp</dimen>
+
+    <!-- Person list item -->
+    <dimen name="person_card_margin_horizontal">16dp</dimen>
+    <dimen name="person_card_margin_vertical">7dp</dimen>
+    <dimen name="person_card_padding">14dp</dimen>
+    <dimen name="person_poster_width">76dp</dimen>
+    <dimen name="person_poster_height">114dp</dimen>
+    <dimen name="person_content_margin_start">16dp</dimen>
+    <dimen name="person_chip_min_height">28dp</dimen>
+    <dimen name="person_chip_padding_horizontal">10dp</dimen>
+    <dimen name="person_chip_padding_vertical">4dp</dimen>
+    <dimen name="person_chip_spacing">8dp</dimen>
+    <dimen name="person_chevron_size">20dp</dimen>
+
+    <!-- Detail -->
+    <dimen name="detail_poster_width">180dp</dimen>
+    <dimen name="detail_poster_height">270dp</dimen>
+    <dimen name="detail_content_padding_horizontal">20dp</dimen>
+    <dimen name="detail_section_padding_top">24dp</dimen>
+    <dimen name="chip_spacing">8dp</dimen>
+
+    <!-- Known for item -->
+    <dimen name="known_for_card_margin_horizontal">16dp</dimen>
+    <dimen name="known_for_card_padding">16dp</dimen>
+    <dimen name="known_for_line_spacing">2dp</dimen>
+</resources>

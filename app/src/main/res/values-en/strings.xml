@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">M2TmdbLuque</string>
+    <string name="popular_people_title">Popular people</string>
+    <string name="person_photo">Person photo</string>
+    <string name="person_popularity">★ %.1f</string>
+    <string name="person_known_for">%1$s</string>
+    <string name="error_http">HTTP error %1$d</string>
+    <string name="error_network">Network error: %1$s</string>
+    <string name="error_empty">No people found</string>
+    <string name="people_stats">%1$d / %2$d people</string>
+    <string name="search_hint">Search for a person…</string>
+    <string name="scroll_to_top">Back to top</string>
+    <string name="person_detail_title">Details</string>
+    <string name="person_gender">Gender: %1$s</string>
+    <string name="person_department">Department: %1$s</string>
+    <string name="known_for_section">Notable works</string>
+    <string name="known_for_item">%1$s · %2$s · ★ %3$.1f</string>
+    <string name="back">Back</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_male">Male</string>
+    <string name="gender_non_binary">Non-binary</string>
+    <string name="gender_unspecified">Unspecified</string>
+    <string name="untitled">Untitled</string>
+    <string name="value_unavailable">—</string>
+</resources>
