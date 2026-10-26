@@ -2,4 +2,31 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Light -->
+    <color name="md_theme_primary">#1B4D4A</color>
+    <color name="md_theme_on_primary">#FFFFFF</color>
+    <color name="md_theme_primary_container">#C8EDE8</color>
+    <color name="md_theme_on_primary_container">#00201E</color>
+    <color name="md_theme_secondary">#9A6B16</color>
+    <color name="md_theme_on_secondary">#FFFFFF</color>
+    <color name="md_theme_secondary_container">#FFDEA6</color>
+    <color name="md_theme_on_secondary_container">#2E1600</color>
+    <color name="md_theme_tertiary">#4A5D78</color>
+    <color name="md_theme_on_tertiary">#FFFFFF</color>
+    <color name="md_theme_tertiary_container">#D3E3FF</color>
+    <color name="md_theme_on_tertiary_container">#041C33</color>
+    <color name="md_theme_background">#F7FAF9</color>
+    <color name="md_theme_on_background">#171D1C</color>
+    <color name="md_theme_surface">#F7FAF9</color>
+    <color name="md_theme_on_surface">#171D1C</color>
+    <color name="md_theme_surface_variant">#DAE5E2</color>
+    <color name="md_theme_on_surface_variant">#3F4947</color>
+    <color name="md_theme_outline">#6F7977</color>
+    <color name="md_theme_outline_variant">#BEC9C6</color>
+    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_on_error">#FFFFFF</color>
+
+    <color name="poster_scrim">#99000000</color>
+    <color name="placeholder_fill">#DAE5E2</color>
 </resources>

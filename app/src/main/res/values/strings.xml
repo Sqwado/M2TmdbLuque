@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">M2TmdbLuque</string>
+    <string name="popular_people_title">Personnes populaires</string>
+    <string name="person_photo">Photo de la personne</string>
+    <string name="person_popularity">Popularité : %.1f</string>
+    <string name="person_known_for">Connu pour : %1$s</string>
+    <string name="error_http">Erreur HTTP %1$d</string>
+    <string name="error_network">Erreur réseau : %1$s</string>
+    <string name="error_empty">Aucune personne trouvée</string>
+    <string name="people_stats">%1$d / %2$d personnes</string>
+    <string name="search_hint">Rechercher une personne…</string>
+    <string name="scroll_to_top">Retour en haut</string>
+    <string name="person_detail_title">Détail</string>
+    <string name="person_gender">Genre : %1$s</string>
+    <string name="person_department">Département : %1$s</string>
+    <string name="known_for_section">Œuvres notables</string>
+    <string name="known_for_item">%1$s · %2$s · ★ %3$.1f</string>
+    <string name="back">Retour</string>
+    <string name="gender_female">Femme</string>
+    <string name="gender_male">Homme</string>
+    <string name="gender_non_binary">Non-binaire</string>
+    <string name="gender_unspecified">Non précisé</string>
+    <string name="untitled">Sans titre</string>
 </resources>
