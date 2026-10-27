@@ -34,6 +34,7 @@
     <dimen name="person_chip_padding_vertical">4dp</dimen>
     <dimen name="person_chip_spacing">8dp</dimen>
     <dimen name="person_chevron_size">20dp</dimen>
+    <dimen name="popularity_meter_height">36dp</dimen>
 
     <!-- Detail -->
     <dimen name="detail_poster_width">180dp</dimen>

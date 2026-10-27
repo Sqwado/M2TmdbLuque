@@ -106,11 +106,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:clickable="false"
-                        android:text="@{@string/person_popularity(person.popularity)}"
                         app:chipBackgroundColor="?attr/colorSecondaryContainer"
                         app:chipStrokeWidth="0dp"
-                        tools:text="Popularité : 14.5" />
+                        tools:text="★ 14.5" />
                 </com.google.android.material.chip.ChipGroup>
+
+                <com.example.m2tmdbluque.ui.ScoreGaugeView
+                    android:id="@+id/scoreGauge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/detail_content_padding_horizontal"
+                    android:layout_marginTop="@dimen/spacing_xxl"
+                    android:minHeight="@dimen/popularity_meter_height"
+                    app:scoreColor="#FF81C212"
+                    app:scoreLabel="Bon"
+                    app:scoreMax="40"
+                    app:scoreValue="14.5" />
 
                 <TextView
                     android:id="@+id/textKnownForTitle"

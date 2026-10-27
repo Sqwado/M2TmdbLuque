@@ -119,28 +119,43 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="false"
-                    android:text="@{@string/person_popularity(person.popularity)}"
                     app:chipBackgroundColor="?attr/colorSecondaryContainer"
                     app:chipMinHeight="@dimen/person_chip_min_height"
                     app:chipStrokeWidth="0dp"
                     app:ensureMinTouchTargetSize="false"
-                    tools:text="★ 10.9" />
+                    tools:text="★ 14.5" />
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
+
+        <com.example.m2tmdbluque.ui.ScoreGaugeView
+            android:id="@+id/scoreGauge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:layout_marginEnd="@dimen/screen_horizontal_margin"
+            android:minHeight="@dimen/popularity_meter_height"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guidelineSplit"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:scoreColor="#FF81C212"
+            app:scoreLabel="Bon"
+            app:scoreMax="40"
+            app:scoreValue="14.5" />
 
         <TextView
             android:id="@+id/textKnownForTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_sm"
-            android:layout_marginTop="@dimen/spacing_md"
+            android:layout_marginTop="@dimen/spacing_lg"
             android:layout_marginEnd="@dimen/screen_horizontal_margin"
             android:text="@string/known_for_section"
             android:textAppearance="?attr/textAppearanceTitleMedium"
             android:textColor="?attr/colorOnSurface"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guidelineSplit"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@id/scoreGauge" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerKnownFor"

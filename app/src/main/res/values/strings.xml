@@ -4,6 +4,7 @@
     <string name="person_photo">Photo de la personne</string>
     <string name="person_photo_missing">Aucune photo disponible</string>
     <string name="person_popularity">★ %.1f</string>
+    <string name="score_gauge_percent">%1$d%%</string>
     <string name="person_known_for">%1$s</string>
     <string name="error_http">Erreur serveur (%1$d). Réessaie plus tard.</string>
     <string name="error_network">Impossible de joindre le serveur. Vérifie ta connexion.</string>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Couleurs ARGB signées (TP) : #fff4331… → entiers Android -->
+    <string-array name="rating_colors">
+        <item>-48335</item>
+        <item>-91118</item>
+        <item>-208869</item>
+        <item>-3613357</item>
+        <item>-8273390</item>
+        <item>-16730590</item>
+    </string-array>
+
+    <string-array name="score_rating">
+        <item>Faible</item>
+        <item>Mauvais</item>
+        <item>Passable</item>
+        <item>Normal</item>
+        <item>Bon</item>
+        <item>Excellent</item>
+    </string-array>
+</resources>

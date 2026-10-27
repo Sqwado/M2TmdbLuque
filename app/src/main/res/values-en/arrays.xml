@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="score_rating">
+        <item>POOR</item>
+        <item>BAD</item>
+        <item>FAIR</item>
+        <item>NORMAL</item>
+        <item>GOOD</item>
+        <item>BEST</item>
+    </string-array>
+</resources>

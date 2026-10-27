@@ -34,9 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var networkMonitor: NetworkMonitor
-    private val personAdapter = PersonAdapter { person ->
-        startActivity(PersonDetailActivity.newIntent(this, person))
-    }
+    private lateinit var personAdapter: PersonAdapter
     private val people = mutableListOf<Person>()
 
     private var currentPage = 0
@@ -70,6 +68,15 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        personAdapter = PersonAdapter { person ->
+            startActivity(
+                PersonDetailActivity.newIntent(
+                    this,
+                    person,
+                    maxPopularity = personAdapter.maxPopularity,
+                ),
+            )
+        }
         setupRecyclerView()
         setupSearch()
         setupScrollToTop()

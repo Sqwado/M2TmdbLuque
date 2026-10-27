@@ -15,13 +15,22 @@ class PersonAdapter(
     private val onPersonClick: (Person) -> Unit,
 ) : ListAdapter<Person, PersonAdapter.PersonViewHolder>(DiffCallback) {
 
+    /** Score maximal courant de la liste (référence 100 % pour la jauge). */
+    var maxPopularity: Double = 1.0
+        private set
+
+    override fun submitList(list: List<Person>?) {
+        maxPopularity = list?.maxOfOrNull { it.popularity }?.coerceAtLeast(1.0) ?: 1.0
+        super.submitList(list)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonViewHolder {
         val binding = ItemPersonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PersonViewHolder(binding, onPersonClick)
     }
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), maxPopularity)
     }
 
     override fun onViewRecycled(holder: PersonViewHolder) {
@@ -36,13 +45,17 @@ class PersonAdapter(
         private val onPersonClick: (Person) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(person: Person) {
+        fun bind(person: Person, maxPopularity: Double) {
             val context = binding.root.context
             binding.person = person
-            binding.textKnownFor.text = context.getString(
-                R.string.person_known_for,
-                person.knownForSummary(context),
-            )
+
+            val percent = ((person.popularity / maxPopularity) * 100.0).toFloat().coerceIn(0f, 100f)
+            binding.scoreGauge.scoreValue = person.popularity.toFloat()
+            binding.scoreGauge.scoreMax = maxPopularity.toFloat()
+            binding.scoreGauge.scoreColor = ScoreRating.getScoreColor(context, percent)
+            binding.scoreGauge.scoreLabel = ScoreRating.getRating(context, percent)
+
+            binding.textKnownFor.text = person.knownForSummary(context)
             Picasso.get().cancelRequest(binding.imageProfile)
             val imageUrl = TmdbClient.profileImageUrl(person.profilePath)
             if (imageUrl == null) {

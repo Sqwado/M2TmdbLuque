@@ -88,28 +88,37 @@
                 android:paddingVertical="@dimen/person_chip_padding_vertical"
                 android:text="@{person.knownForDepartment}"
                 app:layout_constrainedWidth="true"
-                app:layout_constraintEnd_toStartOf="@id/textPopularity"
                 app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="@id/textName"
                 app:layout_constraintTop_toBottomOf="@id/textName"
                 tools:text="Acting" />
 
             <TextView
                 android:id="@+id/textPopularity"
-                style="@style/Widget.M2Tmdb.Chip.Popularity"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_sm"
-                android:background="@drawable/bg_chip_popularity"
-                android:paddingHorizontal="@dimen/person_chip_padding_horizontal"
-                android:paddingVertical="@dimen/person_chip_padding_vertical"
+                android:layout_marginTop="@dimen/spacing_xs"
                 android:text="@{@string/person_popularity(person.popularity)}"
-                app:layout_constraintBottom_toBottomOf="@id/textDepartment"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textColor="?attr/colorSecondary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/textDepartment"
-                app:layout_constraintTop_toTopOf="@id/textDepartment"
+                app:layout_constraintStart_toStartOf="@id/textName"
+                app:layout_constraintTop_toBottomOf="@id/textDepartment"
                 tools:text="★ 14.5" />
+
+            <com.example.m2tmdbluque.ui.ScoreGaugeView
+                android:id="@+id/scoreGauge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:minHeight="@dimen/popularity_meter_height"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/textName"
+                app:layout_constraintTop_toBottomOf="@id/textPopularity"
+                app:scoreColor="#FF81C212"
+                app:scoreLabel="Bon"
+                app:scoreMax="40"
+                app:scoreValue="14.5" />
 
             <TextView
                 android:id="@+id/textKnownFor"
@@ -117,13 +126,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xs"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:textAppearance="?attr/textAppearanceBodySmall"
                 android:textColor="?attr/colorOnSurfaceVariant"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/textName"
-                app:layout_constraintTop_toBottomOf="@id/textDepartment"
+                app:layout_constraintTop_toBottomOf="@id/scoreGauge"
                 app:layout_constraintVertical_bias="0"
                 tools:text="Spider-Man, Uncharted" />
 
