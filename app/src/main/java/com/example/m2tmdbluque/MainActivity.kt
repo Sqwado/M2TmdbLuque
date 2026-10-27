@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.example.m2tmdbluque.api.TmdbClient
 import com.example.m2tmdbluque.databinding.ActivityMainBinding
-import com.example.m2tmdbluque.model.Person
 import com.example.m2tmdbluque.model.PopularPeopleResponse
 import com.example.m2tmdbluque.ui.ImagePrefetcher
 import com.example.m2tmdbluque.ui.PersonAdapter
@@ -35,7 +34,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var networkMonitor: NetworkMonitor
     private lateinit var personAdapter: PersonAdapter
-    private val people = mutableListOf<Person>()
 
     private var currentPage = 0
     private var totalPages = Int.MAX_VALUE
@@ -168,7 +166,7 @@ class MainActivity : AppCompatActivity() {
         pendingRetryPage = null
         when {
             page != null -> loadPeople(page)
-            people.isEmpty() -> loadPeople(page = 1)
+            personAdapter.isEmpty -> loadPeople(page = 1)
             hasMore && prefetchedPage == null && !isPrefetching -> prefetchNextPage()
         }
     }
@@ -177,7 +175,7 @@ class MainActivity : AppCompatActivity() {
         val show = !isOnline || pendingRetryPage != null
         binding.bannerOffline.isVisible = show
         binding.textOfflineBanner.text = when {
-            !isOnline && people.isNotEmpty() -> getString(R.string.error_offline)
+            !isOnline && personAdapter.isNotEmpty -> getString(R.string.error_offline)
             !isOnline -> getString(R.string.error_offline_empty)
             else -> getString(R.string.error_network)
         }
@@ -233,8 +231,7 @@ class MainActivity : AppCompatActivity() {
         totalPages = Int.MAX_VALUE
         hasMore = true
         prefetchedPage = null
-        people.clear()
-        personAdapter.submitList(emptyList())
+        personAdapter.clear()
         loadPeople(page = 1)
     }
 
@@ -371,7 +368,7 @@ class MainActivity : AppCompatActivity() {
     private fun handleNetworkFailure(isFirstPage: Boolean, offline: Boolean) {
         isOnline = networkMonitor.isOnline()
         updateOfflineBanner()
-        if (isFirstPage && people.isEmpty()) {
+        if (isFirstPage && personAdapter.isEmpty) {
             binding.textError.text = getString(
                 if (offline || !isOnline) R.string.error_offline_empty else R.string.error_network,
             )
@@ -395,14 +392,16 @@ class MainActivity : AppCompatActivity() {
         totalResults = body.totalResults
         hasMore = currentPage < totalPages
 
-        if (isFirstPage) people.clear()
-        people.addAll(body.results)
-        personAdapter.submitList(people.toList())
+        if (isFirstPage) {
+            personAdapter.replaceAll(body.results)
+        } else {
+            personAdapter.append(body.results)
+        }
         ImagePrefetcher.prefetchProfiles(body.results)
         updateStats()
 
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, "Page $currentPage : ${people.size}/$totalResults")
+            Log.d(TAG, "Page $currentPage : ${personAdapter.size}/$totalResults")
             body.results.forEach { person ->
                 Log.d(
                     TAG,
@@ -411,8 +410,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.textError.isVisible = people.isEmpty()
-        if (people.isEmpty()) {
+        binding.textError.isVisible = personAdapter.isEmpty
+        if (personAdapter.isEmpty) {
             binding.textError.text = getString(R.string.error_empty)
         } else {
             binding.recyclerPeople.isVisible = true
@@ -420,7 +419,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateStats() {
-        binding.textStats.text = getString(R.string.people_stats, people.size, totalResults)
+        binding.textStats.text = getString(R.string.people_stats, personAdapter.size, totalResults)
     }
 
     private fun showLoading(initial: Boolean) {
@@ -431,15 +430,15 @@ class MainActivity : AppCompatActivity() {
             binding.textError.visibility = View.GONE
         } else {
             binding.progressBar.isVisible = false
-            binding.progressBarMore.isVisible = isLoading && people.isNotEmpty()
-            if (people.isNotEmpty()) {
+            binding.progressBarMore.isVisible = isLoading && personAdapter.isNotEmpty
+            if (personAdapter.isNotEmpty) {
                 binding.recyclerPeople.isVisible = true
             }
         }
     }
 
     private fun showError(message: String, isFirstPage: Boolean) {
-        if (isFirstPage && people.isEmpty()) {
+        if (isFirstPage && personAdapter.isEmpty) {
             binding.textError.text = message
             binding.textError.isVisible = true
             binding.recyclerPeople.isVisible = false

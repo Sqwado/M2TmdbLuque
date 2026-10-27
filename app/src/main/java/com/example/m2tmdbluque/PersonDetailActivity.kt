@@ -79,12 +79,7 @@ class PersonDetailActivity : AppCompatActivity() {
         val maxPopularity = intent.getDoubleExtra(EXTRA_MAX_POPULARITY, 0.0)
             .takeIf { it > 0.0 }
             ?: person.popularity.coerceAtLeast(1.0)
-        val percent = ((person.popularity / maxPopularity) * 100.0).toFloat().coerceIn(0f, 100f)
-
-        binding.scoreGauge.scoreValue = person.popularity.toFloat()
-        binding.scoreGauge.scoreMax = maxPopularity.toFloat()
-        binding.scoreGauge.scoreColor = ScoreRating.getScoreColor(this, percent)
-        binding.scoreGauge.scoreLabel = ScoreRating.getRating(this, percent)
+        ScoreRating.bindGauge(binding.scoreGauge, this, person.popularity, maxPopularity)
     }
 
     private fun readPersonExtra(): Person? =

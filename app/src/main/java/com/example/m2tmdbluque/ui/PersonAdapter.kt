@@ -15,13 +15,41 @@ class PersonAdapter(
     private val onPersonClick: (Person) -> Unit,
 ) : ListAdapter<Person, PersonAdapter.PersonViewHolder>(DiffCallback) {
 
+    /** Snapshot synchrone (ListAdapter.currentList est mis à jour en différé). */
+    private var items: List<Person> = emptyList()
+
     /** Score maximal courant de la liste (référence 100 % pour la jauge). */
     var maxPopularity: Double = 1.0
         private set
 
+    val size: Int get() = items.size
+    val isEmpty: Boolean get() = items.isEmpty()
+    val isNotEmpty: Boolean get() = items.isNotEmpty()
+
+    fun replaceAll(people: List<Person>) {
+        items = people
+        submitList(items)
+    }
+
+    fun append(people: List<Person>) {
+        items = items + people
+        submitList(items)
+    }
+
+    fun clear() {
+        items = emptyList()
+        submitList(items)
+    }
+
     override fun submitList(list: List<Person>?) {
+        val previousMax = maxPopularity
         maxPopularity = list?.maxOfOrNull { it.popularity }?.coerceAtLeast(1.0) ?: 1.0
-        super.submitList(list)
+        val maxChanged = maxPopularity != previousMax
+        super.submitList(list) {
+            if (maxChanged && itemCount > 0) {
+                notifyItemRangeChanged(0, itemCount)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonViewHolder {
@@ -38,8 +66,6 @@ class PersonAdapter(
         super.onViewRecycled(holder)
     }
 
-    override fun getItemCount(): Int = currentList.size
-
     class PersonViewHolder(
         val binding: ItemPersonBinding,
         private val onPersonClick: (Person) -> Unit,
@@ -48,13 +74,7 @@ class PersonAdapter(
         fun bind(person: Person, maxPopularity: Double) {
             val context = binding.root.context
             binding.person = person
-
-            val percent = ((person.popularity / maxPopularity) * 100.0).toFloat().coerceIn(0f, 100f)
-            binding.scoreGauge.scoreValue = person.popularity.toFloat()
-            binding.scoreGauge.scoreMax = maxPopularity.toFloat()
-            binding.scoreGauge.scoreColor = ScoreRating.getScoreColor(context, percent)
-            binding.scoreGauge.scoreLabel = ScoreRating.getRating(context, percent)
-
+            ScoreRating.bindGauge(binding.scoreGauge, context, person.popularity, maxPopularity)
             binding.textKnownFor.text = person.knownForSummary(context)
             Picasso.get().cancelRequest(binding.imageProfile)
             val imageUrl = TmdbClient.profileImageUrl(person.profilePath)
