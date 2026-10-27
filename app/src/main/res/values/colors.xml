@@ -27,6 +27,8 @@
     <color name="md_theme_outline_variant">#BEC9C6</color>
     <color name="md_theme_error">#BA1A1A</color>
     <color name="md_theme_on_error">#FFFFFF</color>
+    <color name="md_theme_error_container">#FFDAD6</color>
+    <color name="md_theme_on_error_container">#410002</color>
 
     <color name="poster_scrim">#99000000</color>
     <color name="placeholder_fill">#DAE5E2</color>

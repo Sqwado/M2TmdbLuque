@@ -55,13 +55,13 @@ class PersonDetailActivity : AppCompatActivity() {
         binding.textGender.text = person.genderLabel(this)
 
         val imageUrl = TmdbClient.profileImageUrl(person.profilePath, large = true)
-        if (imageUrl.isNullOrBlank()) {
-            binding.imageProfile.setImageResource(R.drawable.bg_placeholder_person)
+        if (imageUrl == null) {
+            binding.imageProfile.setImageResource(R.drawable.bg_no_person_photo)
         } else {
             Picasso.get()
                 .load(imageUrl)
                 .placeholder(R.drawable.bg_placeholder_person)
-                .error(R.drawable.bg_placeholder_person)
+                .error(R.drawable.bg_no_person_photo)
                 .fit()
                 .centerCrop()
                 .into(binding.imageProfile)

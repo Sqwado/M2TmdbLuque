@@ -47,9 +47,10 @@ object TmdbClient {
             .create(TmdbApi::class.java)
     }
 
-    fun profileImageUrl(profilePath: String?, large: Boolean = false): String? =
-        profilePath?.let {
-            val base = if (large) IMAGE_BASE_URL_LARGE else IMAGE_BASE_URL
-            "$base$it"
-        }
+    fun profileImageUrl(profilePath: String?, large: Boolean = false): String? {
+        val path = profilePath?.trim().orEmpty()
+        if (path.isEmpty() || path.equals("null", ignoreCase = true)) return null
+        val base = if (large) IMAGE_BASE_URL_LARGE else IMAGE_BASE_URL
+        return "$base$path"
+    }
 }

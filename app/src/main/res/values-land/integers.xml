@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="list_span_count">2</integer>
-    <integer name="prefetch_threshold">6</integer>
+    <integer name="prefetch_threshold">12</integer>
     <integer name="scroll_top_threshold">4</integer>
     <integer name="known_for_overview_max_lines">2</integer>
 </resources>

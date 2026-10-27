@@ -24,10 +24,15 @@ class PersonAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun onViewRecycled(holder: PersonViewHolder) {
+        Picasso.get().cancelRequest(holder.binding.imageProfile)
+        super.onViewRecycled(holder)
+    }
+
     override fun getItemCount(): Int = currentList.size
 
     class PersonViewHolder(
-        private val binding: ItemPersonBinding,
+        val binding: ItemPersonBinding,
         private val onPersonClick: (Person) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -38,15 +43,20 @@ class PersonAdapter(
                 R.string.person_known_for,
                 person.knownForSummary(context),
             )
+            Picasso.get().cancelRequest(binding.imageProfile)
             val imageUrl = TmdbClient.profileImageUrl(person.profilePath)
-            if (imageUrl.isNullOrBlank()) {
-                binding.imageProfile.setImageResource(R.drawable.bg_placeholder_person)
+            if (imageUrl == null) {
+                binding.imageProfile.setImageResource(R.drawable.bg_no_person_photo)
+                binding.imageProfile.contentDescription =
+                    context.getString(R.string.person_photo_missing)
             } else {
+                binding.imageProfile.contentDescription =
+                    context.getString(R.string.person_photo)
                 Picasso.get()
                     .load(imageUrl)
                     .placeholder(R.drawable.bg_placeholder_person)
-                    .error(R.drawable.bg_placeholder_person)
-                    .fit()
+                    .error(R.drawable.bg_no_person_photo)
+                    .resize(ImagePrefetcher.PROFILE_WIDTH, ImagePrefetcher.PROFILE_HEIGHT)
                     .centerCrop()
                     .into(binding.imageProfile)
             }
