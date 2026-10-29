@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        personAdapter = PersonAdapter { person ->
+        personAdapter = PersonAdapter(this) { person ->
             startActivity(
                 PersonDetailActivity.newIntent(
                     this,
@@ -83,10 +83,35 @@ class MainActivity : AppCompatActivity() {
         loadPeople(page = 1)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        // Évite la restauration de fragments dans des container IDs générés (RecyclerView)
+        clearItemSocialBars()
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Après retour du détail : les fragments ont été retirés au save, on les rattache
+        if (::personAdapter.isInitialized) {
+            binding.recyclerPeople.post {
+                personAdapter.reattachVisibleSocialBars(binding.recyclerPeople)
+            }
+        }
+    }
+
     override fun onDestroy() {
         networkMonitor.stop()
         cancelAllCalls()
         super.onDestroy()
+    }
+
+    private fun clearItemSocialBars() {
+        val fm = supportFragmentManager
+        val toRemove = fm.fragments.filter { it.tag?.startsWith("social_bar_") == true }
+        if (toRemove.isEmpty()) return
+        val tx = fm.beginTransaction()
+        toRemove.forEach { tx.remove(it) }
+        tx.commitNowAllowingStateLoss()
     }
 
     private fun setupRecyclerView() {

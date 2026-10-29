@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/socialBarRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="@dimen/spacing_xxs"
+    tools:context=".ui.SocialBarFragment">
+
+    <ImageView
+        android:id="@+id/favorite_iv"
+        android:layout_width="@dimen/social_bar_icon_size"
+        android:layout_height="@dimen/social_bar_icon_size"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/social_favorite"
+        android:padding="@dimen/spacing_xxs"
+        android:src="@drawable/ic_star_border" />
+
+    <ImageView
+        android:id="@+id/like_iv"
+        android:layout_width="@dimen/social_bar_icon_size"
+        android:layout_height="@dimen/social_bar_icon_size"
+        android:layout_marginStart="@dimen/spacing_xs"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/social_like"
+        android:padding="@dimen/spacing_xxs"
+        android:src="@drawable/ic_like" />
+
+    <TextView
+        android:id="@+id/nb_like_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xxs"
+        android:minWidth="@dimen/social_bar_like_min_width"
+        android:textAppearance="?attr/textAppearanceLabelMedium"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:textSize="@dimen/nb_like_text"
+        tools:text="0" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:id="@+id/share_iv"
+        android:layout_width="@dimen/social_bar_icon_size"
+        android:layout_height="@dimen/social_bar_icon_size"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/social_share"
+        android:padding="@dimen/spacing_xxs"
+        android:src="@drawable/ic_share" />
+</LinearLayout>

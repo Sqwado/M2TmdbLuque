@@ -23,18 +23,23 @@
     <dimen name="search_corner_radius">28dp</dimen>
 
     <!-- Person list item -->
-    <dimen name="person_card_margin_horizontal">16dp</dimen>
-    <dimen name="person_card_margin_vertical">7dp</dimen>
-    <dimen name="person_card_padding">14dp</dimen>
-    <dimen name="person_poster_width">76dp</dimen>
-    <dimen name="person_poster_height">114dp</dimen>
-    <dimen name="person_content_margin_start">16dp</dimen>
-    <dimen name="person_chip_min_height">28dp</dimen>
+    <dimen name="person_card_margin_horizontal">14dp</dimen>
+    <dimen name="person_card_margin_vertical">6dp</dimen>
+    <dimen name="person_card_padding">12dp</dimen>
+    <dimen name="person_poster_width">72dp</dimen>
+    <dimen name="person_poster_height">108dp</dimen>
+    <dimen name="person_content_margin_start">12dp</dimen>
+    <dimen name="person_chip_min_height">22dp</dimen>
     <dimen name="person_chip_padding_horizontal">10dp</dimen>
-    <dimen name="person_chip_padding_vertical">4dp</dimen>
-    <dimen name="person_chip_spacing">8dp</dimen>
-    <dimen name="person_chevron_size">20dp</dimen>
-    <dimen name="popularity_meter_height">36dp</dimen>
+    <dimen name="person_chip_padding_vertical">3dp</dimen>
+    <dimen name="person_chip_spacing">6dp</dimen>
+    <dimen name="person_chevron_size">18dp</dimen>
+    <dimen name="popularity_meter_height">30dp</dimen>
+    <dimen name="score_gauge_view_label">12sp</dimen>
+    <dimen name="nb_like_text">12sp</dimen>
+    <dimen name="social_bar_icon_size">26dp</dimen>
+    <dimen name="social_bar_like_min_width">14dp</dimen>
+    <dimen name="social_bar_height">26dp</dimen>
 
     <!-- Detail -->
     <dimen name="detail_poster_width">180dp</dimen>

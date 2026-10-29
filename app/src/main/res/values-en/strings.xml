@@ -6,6 +6,7 @@
     <string name="person_photo_missing">No photo available</string>
     <string name="person_popularity">★ %.1f</string>
     <string name="score_gauge_percent">%1$d%%</string>
+    <string name="no_label">No label !</string>
     <string name="person_known_for">%1$s</string>
     <string name="error_http">Server error (%1$d). Please try again later.</string>
     <string name="error_network">Unable to reach the server. Check your connection.</string>
@@ -29,4 +30,8 @@
     <string name="gender_unspecified">Unspecified</string>
     <string name="untitled">Untitled</string>
     <string name="value_unavailable">—</string>
+    <string name="social_favorite">Favorite</string>
+    <string name="social_like">Like</string>
+    <string name="social_share">Share</string>
+    <string name="social_share_text">Check out %1$s on TMDB!</string>
 </resources>

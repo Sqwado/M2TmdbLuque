@@ -7,6 +7,15 @@
         <variable
             name="person"
             type="com.example.m2tmdbluque.model.Person" />
+        <variable
+            name="scoreMax"
+            type="float" />
+        <variable
+            name="scoreLabel"
+            type="String" />
+        <variable
+            name="scoreColor"
+            type="int" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -17,133 +26,117 @@
         android:layout_marginVertical="@dimen/person_card_margin_vertical"
         android:clickable="true"
         android:focusable="true"
-        app:rippleColor="?attr/colorPrimaryContainer">
+        app:cardElevation="0dp"
+        app:rippleColor="?attr/colorPrimaryContainer"
+        app:strokeColor="?attr/colorOutlineVariant"
+        app:strokeWidth="1dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:padding="@dimen/person_card_padding">
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.22" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageProfile"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="@dimen/person_poster_width"
+                android:layout_height="@dimen/person_poster_height"
                 android:background="@drawable/bg_placeholder_person"
                 android:contentDescription="@string/person_photo"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="2:3"
-                app:layout_constraintEnd_toStartOf="@id/guideline"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.M2Tmdb.Poster"
                 tools:src="@mipmap/ic_launcher" />
 
-            <TextView
-                android:id="@+id/textName"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/person_content_margin_start"
-                android:layout_marginEnd="@dimen/spacing_xs"
-                android:ellipsize="end"
-                android:fontFamily="sans-serif-medium"
-                android:maxLines="1"
-                android:text="@{person.name}"
-                android:textAppearance="?attr/textAppearanceTitleSmall"
-                android:textColor="?attr/colorOnSurface"
-                app:layout_constraintEnd_toStartOf="@id/imageChevron"
-                app:layout_constraintStart_toEndOf="@id/guideline"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Tom Holland" />
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageChevron"
-                android:layout_width="@dimen/person_chevron_size"
-                android:layout_height="@dimen/person_chevron_size"
-                android:contentDescription="@null"
-                android:importantForAccessibility="no"
-                android:src="@drawable/ic_chevron_right"
-                app:layout_constraintBottom_toBottomOf="@id/textName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/textName"
-                app:tint="?attr/colorOutline" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textDepartment"
-                style="@style/Widget.M2Tmdb.Chip.Department"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:background="@drawable/bg_chip_soft"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:paddingHorizontal="@dimen/person_chip_padding_horizontal"
-                android:paddingVertical="@dimen/person_chip_padding_vertical"
-                android:text="@{person.knownForDepartment}"
-                app:layout_constrainedWidth="true"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="@id/textName"
-                app:layout_constraintTop_toBottomOf="@id/textName"
-                tools:text="Acting" />
+                    <TextView
+                        android:id="@+id/textName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:text="@{person.name}"
+                        android:textAppearance="?attr/textAppearanceTitleSmall"
+                        android:textColor="?attr/colorOnSurface"
+                        tools:text="Tom Holland" />
 
-            <TextView
-                android:id="@+id/textPopularity"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@{@string/person_popularity(person.popularity)}"
-                android:textAppearance="?attr/textAppearanceLabelMedium"
-                android:textColor="?attr/colorSecondary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/textName"
-                app:layout_constraintTop_toBottomOf="@id/textDepartment"
-                tools:text="★ 14.5" />
+                    <ImageView
+                        android:id="@+id/imageChevron"
+                        android:layout_width="@dimen/person_chevron_size"
+                        android:layout_height="@dimen/person_chevron_size"
+                        android:contentDescription="@null"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="?attr/colorOutline" />
+                </LinearLayout>
 
-            <com.example.m2tmdbluque.ui.ScoreGaugeView
-                android:id="@+id/scoreGauge"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:minHeight="@dimen/popularity_meter_height"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/textName"
-                app:layout_constraintTop_toBottomOf="@id/textPopularity"
-                app:scoreColor="#FF81C212"
-                app:scoreLabel="Bon"
-                app:scoreMax="40"
-                app:scoreValue="14.5" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textKnownFor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textAppearance="?attr/textAppearanceBodySmall"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/textName"
-                app:layout_constraintTop_toBottomOf="@id/scoreGauge"
-                app:layout_constraintVertical_bias="0"
-                tools:text="Spider-Man, Uncharted" />
+                    <TextView
+                        android:id="@+id/textDepartment"
+                        style="@style/Widget.M2Tmdb.Chip.Department"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_chip_soft"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingHorizontal="@dimen/person_chip_padding_horizontal"
+                        android:paddingVertical="@dimen/person_chip_padding_vertical"
+                        android:text="@{person.knownForDepartment}"
+                        tools:text="Acting" />
 
-            <FrameLayout
-                android:id="@+id/separator"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/textPopularity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_sm"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@{@string/person_popularity(person.popularity)}"
+                        android:textAppearance="?attr/textAppearanceLabelMedium"
+                        android:textColor="?attr/colorSecondary"
+                        tools:text="★ 14.5" />
+                </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/socialBarContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:minHeight="@dimen/social_bar_height"
+                    android:saveEnabled="false"
+                    tools:layout="@layout/fragment_social_bar" />
+
+                <com.example.m2tmdbluque.ui.ScoreGaugeView
+                    android:id="@+id/scoreGauge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xxs"
+                    android:minHeight="@dimen/popularity_meter_height"
+                    app:scoreColor="@{scoreColor}"
+                    app:scoreLabel="@{scoreLabel}"
+                    app:scoreMax="@{scoreMax}"
+                    app:scoreValue="@{(float) person.popularity}" />
+            </LinearLayout>
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

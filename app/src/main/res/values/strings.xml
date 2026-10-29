@@ -5,6 +5,7 @@
     <string name="person_photo_missing">Aucune photo disponible</string>
     <string name="person_popularity">★ %.1f</string>
     <string name="score_gauge_percent">%1$d%%</string>
+    <string name="no_label">Pas de label !</string>
     <string name="person_known_for">%1$s</string>
     <string name="error_http">Erreur serveur (%1$d). Réessaie plus tard.</string>
     <string name="error_network">Impossible de joindre le serveur. Vérifie ta connexion.</string>
@@ -28,4 +29,8 @@
     <string name="gender_unspecified">Non précisé</string>
     <string name="untitled">Sans titre</string>
     <string name="value_unavailable">—</string>
+    <string name="social_favorite">Favori</string>
+    <string name="social_like">J’aime</string>
+    <string name="social_share">Partager</string>
+    <string name="social_share_text">Découvre %1$s sur TMDB !</string>
 </resources>
