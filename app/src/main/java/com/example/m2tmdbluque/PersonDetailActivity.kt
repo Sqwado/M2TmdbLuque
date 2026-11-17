@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,6 +18,8 @@ import com.example.m2tmdbluque.model.Person
 import com.example.m2tmdbluque.ui.KnownForAdapter
 import com.example.m2tmdbluque.ui.ScoreRating
 import com.squareup.picasso.Picasso
+
+const val PERSON_ID_EXTRA_KEY = "person_id_extra_key"
 
 class PersonDetailActivity : AppCompatActivity() {
 
@@ -40,7 +43,20 @@ class PersonDetailActivity : AppCompatActivity() {
             insets
         }
 
-        val person = readPersonExtra()
+        bindFromIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        bindFromIntent(intent)
+    }
+
+    private fun bindFromIntent(intent: Intent) {
+        val personId = intent.getStringExtra(PERSON_ID_EXTRA_KEY)
+        Log.i(TAG, "PersonDetailActivity personId=$personId")
+
+        val person = readPersonExtra(intent)
         if (person == null) {
             finish()
             return
@@ -56,7 +72,7 @@ class PersonDetailActivity : AppCompatActivity() {
         binding.textGender.text = person.genderLabel(this)
         binding.textPopularity.text = getString(R.string.person_popularity, person.popularity)
 
-        bindScoreGauge(person)
+        bindScoreGauge(person, intent)
 
         val imageUrl = TmdbClient.profileImageUrl(person.profilePath, large = true)
         if (imageUrl == null) {
@@ -75,14 +91,14 @@ class PersonDetailActivity : AppCompatActivity() {
         binding.recyclerKnownFor.adapter = KnownForAdapter(person.knownFor)
     }
 
-    private fun bindScoreGauge(person: Person) {
+    private fun bindScoreGauge(person: Person, intent: Intent) {
         val maxPopularity = intent.getDoubleExtra(EXTRA_MAX_POPULARITY, 0.0)
             .takeIf { it > 0.0 }
             ?: person.popularity.coerceAtLeast(1.0)
         ScoreRating.bindGauge(binding.scoreGauge, this, person.popularity, maxPopularity)
     }
 
-    private fun readPersonExtra(): Person? =
+    private fun readPersonExtra(intent: Intent): Person? =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getSerializableExtra(EXTRA_PERSON, Person::class.java)
         } else {
@@ -91,6 +107,7 @@ class PersonDetailActivity : AppCompatActivity() {
         }
 
     companion object {
+        private const val TAG = "PersonDetailActivity"
         private const val EXTRA_PERSON = "extra_person"
         private const val EXTRA_MAX_POPULARITY = "extra_max_popularity"
 
@@ -98,9 +115,14 @@ class PersonDetailActivity : AppCompatActivity() {
             context: Context,
             person: Person,
             maxPopularity: Double = person.popularity.coerceAtLeast(1.0),
-        ): Intent =
-            Intent(context, PersonDetailActivity::class.java)
-                .putExtra(EXTRA_PERSON, person)
-                .putExtra(EXTRA_MAX_POPULARITY, maxPopularity)
+        ): Intent {
+            val intent = Intent()
+            intent.setClass(context, PersonDetailActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            intent.putExtra(PERSON_ID_EXTRA_KEY, person.id.toString())
+            intent.putExtra(EXTRA_PERSON, person)
+            intent.putExtra(EXTRA_MAX_POPULARITY, maxPopularity)
+            return intent
+        }
     }
 }

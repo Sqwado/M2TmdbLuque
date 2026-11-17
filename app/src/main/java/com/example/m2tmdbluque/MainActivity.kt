@@ -68,15 +68,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        personAdapter = PersonAdapter(this) { person ->
-            startActivity(
-                PersonDetailActivity.newIntent(
-                    this,
-                    person,
-                    maxPopularity = personAdapter.maxPopularity,
-                ),
-            )
-        }
+        personAdapter = PersonAdapter(this)
         setupRecyclerView()
         setupSearch()
         setupScrollToTop()

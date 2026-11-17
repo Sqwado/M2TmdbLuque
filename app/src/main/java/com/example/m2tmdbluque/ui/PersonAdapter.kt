@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.m2tmdbluque.PersonDetailActivity
 import com.example.m2tmdbluque.R
 import com.example.m2tmdbluque.SAVED_HIGHEST_POPULARITY_SPKEY
 import com.example.m2tmdbluque.api.TmdbClient
@@ -19,7 +20,6 @@ import com.squareup.picasso.Picasso
 
 class PersonAdapter(
     private val host: FragmentActivity,
-    private val onPersonClick: (Person) -> Unit,
 ) : ListAdapter<Person, PersonAdapter.PersonViewHolder>(DiffCallback) {
 
     /** Snapshot synchrone (ListAdapter.currentList est mis à jour en différé). */
@@ -80,11 +80,19 @@ class PersonAdapter(
         binding.socialBarContainer.id = View.generateViewId()
         // Pas de restauration d'état : les IDs générés ne survivent pas à une recreation
         binding.socialBarContainer.isSaveEnabled = false
-        return PersonViewHolder(binding, host.supportFragmentManager, onPersonClick)
+        return PersonViewHolder(binding, host.supportFragmentManager)
     }
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
-        holder.bind(getItem(position), maxPopularity)
+        holder.bind(getItem(position), maxPopularity) { person ->
+            host.startActivity(
+                PersonDetailActivity.newIntent(
+                    host,
+                    person,
+                    maxPopularity = maxPopularity,
+                ),
+            )
+        }
     }
 
     override fun onViewRecycled(holder: PersonViewHolder) {
@@ -111,13 +119,16 @@ class PersonAdapter(
     class PersonViewHolder(
         val binding: ItemPersonBinding,
         private val fragmentManager: FragmentManager,
-        private val onPersonClick: (Person) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private var boundPersonId: Int = NO_PERSON
         private var boundPersonName: String = ""
 
-        fun bind(person: Person, maxPopularity: Double) {
+        fun bind(
+            person: Person,
+            maxPopularity: Double,
+            onPersonClick: (Person) -> Unit,
+        ) {
             val context = binding.root.context
             boundPersonId = person.id
             boundPersonName = person.name
