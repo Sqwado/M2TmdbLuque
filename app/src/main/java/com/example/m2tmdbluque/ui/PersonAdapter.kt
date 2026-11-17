@@ -1,14 +1,17 @@
 package com.example.m2tmdbluque.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.edit
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.m2tmdbluque.R
+import com.example.m2tmdbluque.SAVED_HIGHEST_POPULARITY_SPKEY
 import com.example.m2tmdbluque.api.TmdbClient
 import com.example.m2tmdbluque.databinding.ItemPersonBinding
 import com.example.m2tmdbluque.model.Person
@@ -49,9 +52,24 @@ class PersonAdapter(
         val previousMax = maxPopularity
         maxPopularity = list?.maxOfOrNull { it.popularity }?.coerceAtLeast(1.0) ?: 1.0
         val maxChanged = maxPopularity != previousMax
+        if (maxChanged) {
+            saveHighestPopularity()
+        }
         super.submitList(list) {
             if (maxChanged && itemCount > 0) {
                 notifyItemRangeChanged(0, itemCount)
+            }
+        }
+    }
+
+    /** Exo 1 — persiste le max de popularité si supérieur à la valeur sauvegardée. */
+    private fun saveHighestPopularity() {
+        val sharedPref = host.getPreferences(Context.MODE_PRIVATE)
+        val highestPopularity = sharedPref.getFloat(SAVED_HIGHEST_POPULARITY_SPKEY, 0f)
+        val current = maxPopularity.toFloat()
+        if (current > highestPopularity) {
+            sharedPref.edit {
+                putFloat(SAVED_HIGHEST_POPULARITY_SPKEY, current)
             }
         }
     }

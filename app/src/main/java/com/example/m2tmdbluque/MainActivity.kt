@@ -29,6 +29,8 @@ import retrofit2.Response
 import java.io.IOException
 import java.net.UnknownHostException
 
+const val SAVED_HIGHEST_POPULARITY_SPKEY = "saved_highest_popularity_spkey"
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -80,7 +82,15 @@ class MainActivity : AppCompatActivity() {
         setupScrollToTop()
         setupOfflineBanner()
         setupNetworkMonitor()
+        showHighestPopularity()
         loadPeople(page = 1)
+    }
+
+    /** Exo 1 — lit le plus grand score de popularité persisté (Float). */
+    private fun showHighestPopularity() {
+        val sharedPref = getPreferences(MODE_PRIVATE)
+        val highestPopularity = sharedPref.getFloat(SAVED_HIGHEST_POPULARITY_SPKEY, 0f)
+        Log.i(TAG, "saved highest person popularity = $highestPopularity")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -2,39 +2,49 @@ package com.example.m2tmdbluque.ui
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.m2tmdbluque.R
 import com.example.m2tmdbluque.databinding.FragmentSocialBarBinding
 
+private const val SBF_KEY = "sbf_key"
+private const val ARG_PERSON_NAME = "person_name"
+
 class SocialBarFragment : Fragment() {
 
     private var _binding: FragmentSocialBarBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: SocialBarViewModel by activityViewModels()
+    private var cn: Int = Color.LTGRAY
+    private var cs: Int = Color.RED
 
-    val personId: Int
-        get() = requireArguments().getInt(ARG_PERSON_ID)
+    /** Clé dans les maps du ViewModel (= id TMDB de la personne). */
+    private var mapkey: Int = 0
 
     private val personName: String
         get() = requireArguments().getString(ARG_PERSON_NAME).orEmpty()
 
+    val personId: Int
+        get() = mapkey
+
+    private val viewModel by activityViewModels<SocialBarViewModel>()
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d(TAG, "onAttach personId=$personId")
+        Log.d(TAG, "onAttach mapkey=$mapkey")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate personId=$personId")
+        mapkey = requireArguments().getInt(SBF_KEY)
+        Log.d(TAG, "onCreate mapkey=$mapkey")
     }
 
     override fun onCreateView(
@@ -42,86 +52,83 @@ class SocialBarFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        Log.d(TAG, "onCreateView personId=$personId")
+        Log.d(TAG, "onCreateView mapkey=$mapkey")
         _binding = FragmentSocialBarBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onViewCreated personId=$personId")
+        Log.d(TAG, "onViewCreated mapkey=$mapkey")
 
-        binding.favoriteIv.setOnClickListener { viewModel.toggleFavorite(personId) }
-        binding.likeIv.setOnClickListener { viewModel.incrementLikes(personId) }
+        cn = requireContext().getColor(R.color.ic_social_normal)
+        cs = requireContext().getColor(R.color.ic_social_selected)
+
+        binding.favoriteIv.setOnClickListener { viewModel.toggleFavorite(mapkey) }
+        binding.likeIv.setOnClickListener { viewModel.incrementLikes(mapkey) }
         binding.shareIv.setOnClickListener { sharePerson() }
 
-        viewModel.uiState(personId).observe(viewLifecycleOwner) { state ->
-            render(state)
-        }
+        viewModel.revision.observe(viewLifecycleOwner) { render() }
+        render()
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d(TAG, "onStart personId=$personId")
+        Log.d(TAG, "onStart mapkey=$mapkey")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(TAG, "onResume personId=$personId")
+        Log.d(TAG, "onResume mapkey=$mapkey")
     }
 
     override fun onPause() {
-        Log.d(TAG, "onPause personId=$personId")
+        Log.d(TAG, "onPause mapkey=$mapkey")
         super.onPause()
     }
 
     override fun onStop() {
-        Log.d(TAG, "onStop personId=$personId")
+        Log.d(TAG, "onStop mapkey=$mapkey")
         super.onStop()
     }
 
     override fun onDestroyView() {
-        Log.d(TAG, "onDestroyView personId=$personId")
+        Log.d(TAG, "onDestroyView mapkey=$mapkey")
         _binding = null
         super.onDestroyView()
     }
 
     override fun onDestroy() {
-        Log.d(TAG, "onDestroy personId=$personId")
+        Log.d(TAG, "onDestroy mapkey=$mapkey")
         super.onDestroy()
     }
 
     override fun onDetach() {
-        Log.d(TAG, "onDetach personId=$personId")
+        Log.d(TAG, "onDetach mapkey=$mapkey")
         super.onDetach()
     }
 
-    private fun render(state: SocialBarUiState) {
-        val ctx = requireContext()
-        val inactive = ContextCompat.getColor(ctx, R.color.md_theme_outline)
-        val favoriteActive = ContextCompat.getColor(ctx, R.color.md_theme_error)
-        val likeActive = ContextCompat.getColor(ctx, R.color.md_theme_primary)
+    private fun render() {
+        val favorite = viewModel.isFavoriteOf(mapkey)
+        val likes = viewModel.likesOf(mapkey)
 
         binding.favoriteIv.setImageResource(
-            if (state.isFavorite) R.drawable.ic_favorite else R.drawable.ic_star_border,
+            if (favorite) R.drawable.ic_favorite else R.drawable.ic_star_border,
         )
-        binding.favoriteIv.imageAlpha = if (state.isFavorite) 255 else 180
-        binding.favoriteIv.setColorFilter(
-            if (state.isFavorite) favoriteActive else inactive,
-        )
+        binding.favoriteIv.imageAlpha = if (favorite) 255 else 180
+        binding.favoriteIv.setColorFilter(if (favorite) cs else cn)
+
         binding.likeIv.setImageResource(
-            if (state.likeCount > 0) R.drawable.ic_like else R.drawable.ic_favorite_border,
+            if (likes > 0) R.drawable.ic_like else R.drawable.ic_favorite_border,
         )
-        binding.likeIv.imageAlpha = if (state.likeCount > 0) 255 else 180
-        binding.likeIv.setColorFilter(
-            if (state.likeCount > 0) likeActive else inactive,
-        )
+        binding.likeIv.imageAlpha = if (likes > 0) 255 else 180
+        binding.likeIv.setColorFilter(if (likes > 0) cs else cn)
+
         binding.shareIv.imageAlpha = 180
-        binding.shareIv.setColorFilter(inactive)
-        binding.nbLikeTv.text = state.likeCount.toString()
-        binding.nbLikeTv.setTextColor(
-            if (state.likeCount > 0) likeActive else inactive,
-        )
+        binding.shareIv.setColorFilter(cn)
+
+        binding.nbLikeTv.text = likes.toString()
+        binding.nbLikeTv.setTextColor(if (likes > 0) cs else cn)
     }
 
     private fun sharePerson() {
@@ -135,13 +142,12 @@ class SocialBarFragment : Fragment() {
 
     companion object {
         private const val TAG = "SocialBarFragment"
-        private const val ARG_PERSON_ID = "person_id"
-        private const val ARG_PERSON_NAME = "person_name"
 
-        fun newInstance(personId: Int, personName: String = ""): SocialBarFragment =
+        /** @param mapkey id personne (clé des maps ViewModel) */
+        fun newInstance(mapkey: Int, personName: String = ""): SocialBarFragment =
             SocialBarFragment().apply {
                 arguments = bundleOf(
-                    ARG_PERSON_ID to personId,
+                    SBF_KEY to mapkey,
                     ARG_PERSON_NAME to personName,
                 )
             }

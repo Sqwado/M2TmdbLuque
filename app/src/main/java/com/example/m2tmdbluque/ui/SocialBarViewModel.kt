@@ -1,35 +1,64 @@
 package com.example.m2tmdbluque.ui
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-
-data class SocialBarUiState(
-    val isFavorite: Boolean = false,
-    val likeCount: Int = 0,
-)
+import androidx.lifecycle.viewModelScope
+import com.example.m2tmdbluque.TmdbApplication
+import com.example.m2tmdbluque.data.db.SocialBarRepository
+import kotlinx.coroutines.launch
 
 /**
- * ViewModel partagé au niveau de l'Activity (activityViewModels).
- * Conserve favoris / likes par personId malgré le recyclage des fragments
- * dans la RecyclerView.
+ * ViewModel partagé (activityViewModels) — maps par personId (= mapkey du fragment).
+ * Persiste likes / favoris via Room.
  */
-class SocialBarViewModel : ViewModel() {
+class SocialBarViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository: SocialBarRepository =
+        (application as TmdbApplication).socialBarRepository
 
-    private val states = mutableMapOf<Int, MutableLiveData<SocialBarUiState>>()
+    var nbLikes = mutableMapOf<Int, Int>()
+    var isFavorite = mutableMapOf<Int, Boolean>()
 
-    fun uiState(personId: Int): LiveData<SocialBarUiState> =
-        states.getOrPut(personId) { MutableLiveData(SocialBarUiState()) }
+    /** Notifie les fragments recyclés qu'une map a changé. */
+    private val _revision = MutableLiveData(0)
+    val revision: LiveData<Int> = _revision
 
-    fun toggleFavorite(personId: Int) {
-        val live = states.getOrPut(personId) { MutableLiveData(SocialBarUiState()) }
-        val current = live.value ?: SocialBarUiState()
-        live.value = current.copy(isFavorite = !current.isFavorite)
+    init {
+        viewModelScope.launch {
+            nbLikes.putAll(repository.getAllLikes())
+            isFavorite.putAll(repository.getAllFavorites())
+            bump()
+        }
     }
 
-    fun incrementLikes(personId: Int) {
-        val live = states.getOrPut(personId) { MutableLiveData(SocialBarUiState()) }
-        val current = live.value ?: SocialBarUiState()
-        live.value = current.copy(likeCount = current.likeCount + 1)
+    fun likesOf(mapkey: Int): Int = nbLikes.getOrElse(mapkey) { 0 }
+
+    fun isFavoriteOf(mapkey: Int): Boolean = isFavorite.getOrElse(mapkey) { false }
+
+    fun toggleFavorite(mapkey: Int) {
+        isFavorite[mapkey] = !isFavoriteOf(mapkey)
+        bump()
+        persist(mapkey)
+    }
+
+    fun incrementLikes(mapkey: Int) {
+        nbLikes[mapkey] = likesOf(mapkey) + 1
+        bump()
+        persist(mapkey)
+    }
+
+    private fun persist(mapkey: Int) {
+        viewModelScope.launch {
+            repository.upsert(
+                personId = mapkey,
+                isFavorite = isFavoriteOf(mapkey),
+                nbLikes = likesOf(mapkey),
+            )
+        }
+    }
+
+    private fun bump() {
+        _revision.value = (_revision.value ?: 0) + 1
     }
 }

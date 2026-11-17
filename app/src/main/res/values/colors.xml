@@ -32,4 +32,8 @@
 
     <color name="poster_scrim">#99000000</color>
     <color name="placeholder_fill">#DAE5E2</color>
+
+    <!-- SocialBar (TP) -->
+    <color name="ic_social_normal">#A4A4A4</color>
+    <color name="ic_social_selected">#F04E46</color>
 </resources>
