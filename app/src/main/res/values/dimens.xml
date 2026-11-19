@@ -52,4 +52,12 @@
     <dimen name="known_for_card_margin_horizontal">16dp</dimen>
     <dimen name="known_for_card_padding">16dp</dimen>
     <dimen name="known_for_line_spacing">2dp</dimen>
+
+    <!-- Sensor demo -->
+    <dimen name="sensor_view_caption">18sp</dimen>
+    <dimen name="sensor_item_name">16sp</dimen>
+    <dimen name="sensor_item_caption">13sp</dimen>
+    <dimen name="sensor_item_value">14sp</dimen>
+    <dimen name="sensor_demo_caption">15sp</dimen>
+    <dimen name="sensor_demo_values">14sp</dimen>
 </resources>

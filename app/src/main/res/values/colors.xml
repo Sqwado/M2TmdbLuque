@@ -36,4 +36,13 @@
     <!-- SocialBar (TP) -->
     <color name="ic_social_normal">#A4A4A4</color>
     <color name="ic_social_selected">#F04E46</color>
+
+    <!-- Sensor demo -->
+    <color name="sensor_caption_bg">#1B4D4A</color>
+    <color name="sensor_item_name">#1B4D4A</color>
+    <color name="sensor_item_type_caption">#9A6B16</color>
+    <color name="sensor_item_resolution_caption">#4A5D78</color>
+    <color name="sensor_item_range_caption">#6F7977</color>
+    <color name="sensor_separator">#BEC9C6</color>
+    <color name="sensor_dial">#757575</color>
 </resources>

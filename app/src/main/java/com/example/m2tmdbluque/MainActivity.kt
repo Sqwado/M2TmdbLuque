@@ -1,6 +1,7 @@
 package com.example.m2tmdbluque
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -83,6 +84,15 @@ class MainActivity : AppCompatActivity() {
         val sharedPref = getPreferences(MODE_PRIVATE)
         val highestPopularity = sharedPref.getFloat(SAVED_HIGHEST_POPULARITY_SPKEY, 0f)
         Log.i(TAG, "saved highest person popularity = $highestPopularity")
+    }
+
+    /** Callback XML `android:onClick` — lance la démo capteurs. */
+    fun showSensorDemo(view: View) {
+        Log.d(TAG, "showSensorDemo()")
+        val intent = Intent()
+        intent.setClass(this, SensorDemoActivity::class.java)
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

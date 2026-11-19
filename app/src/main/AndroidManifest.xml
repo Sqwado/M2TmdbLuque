@@ -30,6 +30,12 @@
             android:name=".PersonDetailActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".SensorDemoActivity"
+            android:exported="false"
+            android:label="@string/sensor_demo_activity_title"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

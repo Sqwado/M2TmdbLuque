@@ -18,4 +18,17 @@
         <item>Bon</item>
         <item>Excellent</item>
     </string-array>
+
+    <!-- Couleurs des aiguilles du cadran SensorDemo (ARGB signés) -->
+    <string-array name="dial_needle_colors">
+        <item>-16776961</item>
+        <item>-65536</item>
+        <item>-16711936</item>
+        <item>-65281</item>
+        <item>-256</item>
+        <item>-1611681</item>
+        <item>-8273390</item>
+        <item>-208869</item>
+        <item>-4342339</item>
+    </string-array>
 </resources>

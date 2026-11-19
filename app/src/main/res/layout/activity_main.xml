@@ -121,11 +121,24 @@
             android:paddingTop="@dimen/spacing_md"
             android:paddingBottom="@dimen/list_bottom_padding"
             android:scrollbars="none"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/sensor_demo_bt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bannerOffline"
             tools:listitem="@layout/item_person" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sensor_demo_bt"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/screen_horizontal_margin"
+            android:layout_marginBottom="@dimen/spacing_md"
+            android:onClick="showSensorDemo"
+            android:text="@string/sensor_demo_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ProgressBar
             android:id="@+id/progressBarMore"
@@ -178,7 +191,7 @@
             android:contentDescription="@string/scroll_to_top"
             android:visibility="gone"
             app:backgroundTint="?attr/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/sensor_demo_bt"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_arrow_upward"
             app:tint="?attr/colorOnPrimary"

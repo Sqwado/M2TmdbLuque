@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="sensorItem"
+            type="android.hardware.Sensor" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sensor_item_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginVertical="4dp"
+        android:background="@drawable/bg_sensor_item"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/sensor_name_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{sensorItem.name}"
+            android:textAlignment="textStart"
+            android:textColor="@color/sensor_item_name"
+            android:textSize="@dimen/sensor_item_name"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/sensor_type_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="icm4x6xx Accelerometer Non-wakeup" />
+
+        <TextView
+            android:id="@+id/type_caption_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/type_caption"
+            android:textColor="@color/sensor_item_type_caption"
+            android:textSize="@dimen/sensor_item_caption"
+            app:layout_constraintBottom_toBottomOf="@+id/sensor_type_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sensor_type_tv" />
+
+        <TextView
+            android:id="@+id/resolution_caption_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/resolution_caption"
+            android:textColor="@color/sensor_item_resolution_caption"
+            android:textSize="@dimen/sensor_item_caption"
+            app:layout_constraintBottom_toBottomOf="@+id/sensor_resolution_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sensor_resolution_tv" />
+
+        <TextView
+            android:id="@+id/maxrange_caption_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/range_caption"
+            android:textColor="@color/sensor_item_range_caption"
+            android:textSize="@dimen/sensor_item_caption"
+            app:layout_constraintBottom_toBottomOf="@+id/sensor_maxrange_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sensor_maxrange_tv" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="type_caption_tv,resolution_caption_tv,maxrange_caption_tv" />
+
+        <TextView
+            android:id="@+id/sensor_type_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{sensorItem.stringType}"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="@dimen/sensor_item_value"
+            app:layout_constraintBottom_toTopOf="@+id/sensor_resolution_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/barrier"
+            app:layout_constraintTop_toBottomOf="@+id/sensor_name_tv"
+            tools:text="android.sensor.accelerometer" />
+
+        <TextView
+            android:id="@+id/sensor_resolution_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{String.valueOf(sensorItem.resolution)}"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="@dimen/sensor_item_value"
+            app:layout_constraintBottom_toTopOf="@+id/sensor_maxrange_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/barrier"
+            app:layout_constraintTop_toBottomOf="@+id/sensor_type_tv"
+            tools:text="0.002394" />
+
+        <TextView
+            android:id="@+id/sensor_maxrange_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="2dp"
+            android:text="@{String.valueOf(sensorItem.maximumRange)}"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="@dimen/sensor_item_value"
+            app:layout_constraintBottom_toTopOf="@+id/separator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/barrier"
+            app:layout_constraintTop_toBottomOf="@+id/sensor_resolution_tv"
+            tools:text="78.4532" />
+
+        <FrameLayout
+            android:id="@+id/separator"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sensor_maxrange_tv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

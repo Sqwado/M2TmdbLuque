@@ -33,4 +33,17 @@
     <string name="social_like">J’aime</string>
     <string name="social_share">Partager</string>
     <string name="social_share_text">Découvre %1$s sur TMDB !</string>
+
+    <!-- Sensor demo -->
+    <string name="sensor_demo_activity_title">Sensor Demo</string>
+    <string name="sensor_demo_button">Sensor Demo</string>
+    <string name="sensor_list_caption">Liste des capteurs</string>
+    <string name="sensor_values_caption">Valeurs du capteur</string>
+    <string name="no_sensor_values">Pas de valeurs &#8230;</string>
+    <string name="sensor_not_available">Ce capteur ne peut pas être écouté</string>
+    <string name="type_caption">Type :</string>
+    <string name="resolution_caption">Résolution :</string>
+    <string name="range_caption">Max range :</string>
+    <string name="sensor_name">nom du capteur</string>
+    <string name="sensor_unknown">capteur inconnu</string>
 </resources>
